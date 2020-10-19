@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_button"
+        android:icon="@drawable/stop_circle"
+        android:title="Button" />
+
+    <item
+        android:id="@+id/navigation_route"
+        android:icon="@drawable/bus"
+        android:title="Bus Route" />
+
+    <item
+        android:id="@+id/navigation_login"
+        android:icon="@drawable/login"
+        android:title="Log In" />
+
+</menu>
