@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_button">
+
+    <fragment
+        android:id="@+id/navigation_button"
+        android:name="com.example.bus_stop_button.ui.home.HomeFragment"
+        android:label="Button"
+        tools:layout="@layout/fragment_button" />
+
+    <fragment
+        android:id="@+id/navigation_route"
+        android:name="com.example.bus_stop_button.ui.dashboard.DashboardFragment"
+        android:label="Bus Route"
+        tools:layout="@layout/fragment_route" />
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.example.bus_stop_button.ui.notifications.NotificationsFragment"
+        android:label="Log In"
+        tools:layout="@layout/fragment_login" />
+</navigation>
