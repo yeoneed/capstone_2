@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "BUS_STOP_BUTTON"
