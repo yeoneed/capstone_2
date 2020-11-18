@@ -27,11 +27,11 @@ public class MainActivity extends Activity {
     private BluetoothSocket btSocket = null;
     private OutputStream outStream = null;
 
-    // SPP(Serial Port Profile) UUID service
-    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // 소켓 통신을 하려면 이 uuid를 넣어 주어야 한다.
 
-    // MAC-address of Bluetooth module (you must edit this line)
-    private static String address = "98:D3:91:FD:D2:A1"; // 여기에 hc-06의 MAC주소를 넣어야 하는듯하다. 알아내는 방법은 북마크 참조.
+    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
+
+    private static String address = "98:D3:91:FD:D2:A1";
 
     /** Called when the activity is first created. */
     @Override
