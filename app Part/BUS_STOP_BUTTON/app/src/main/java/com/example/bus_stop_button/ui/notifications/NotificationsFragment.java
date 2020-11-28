@@ -1,35 +1,197 @@
 package com.example.bus_stop_button.ui.notifications;
 
+
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
+import com.example.bus_stop_button.MainActivity;
 import com.example.bus_stop_button.R;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLEncoder;
+
 public class NotificationsFragment extends Fragment {
+    EditText edit;
+    TextView text;
+    Button button;
+    XmlPullParser xpp;
 
-    private NotificationsViewModel notificationsViewModel;
+    String key="pvvI2Zz%2Fe%2Bcdi5PrfOVVmTdWfxFJn0BWbPun%2FBmxt5Rn6Jt13zLa8Z%2Fe22UfqhON5zHYrn%2BAtefALJd%2FBiO36w%3D%3D";
+    String data;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getActivity().setContentView(R.layout.fragment_login);
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_login, container, false);
+        edit= (EditText) getActivity().findViewById(R.id.edit);
+        text= (TextView) getActivity().findViewById(R.id.result);
+        button = (Button) getActivity().findViewById(R.id.button);
 
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.button:
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                data=getXmlData();
+
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        text.setText(data);
+
+                                    }
+                                });
+                            }
+                        }).start();
+                        break;
+
+
+                }
 
             }
         });
-        return root;
+
+
     }
+
+
+
+    public void mOnClick(View v){
+        switch (v.getId()){
+            case R.id.button:
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        data=getXmlData();
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                text.setText(data);
+
+                            }
+                        });
+                    }
+                }).start();
+                break;
+
+
+        }
+    }
+
+    String getXmlData(){
+        StringBuffer buffer=new StringBuffer();
+        String str= edit.getText().toString(); //EditText에 작성된 Text얻어오기.
+        String routeId = URLEncoder.encode(str);
+        String query="%EC%A0%84%EB%A0%A5%EB%A1%9C";
+
+        String queryUrl="http://openapi.gbis.go.kr/ws/rest/busrouteservice/station?serviceKey=pvvI2Zz%2Fe%2Bcdi5PrfOVVmTdWfxFJn0BWbPun%2FBmxt5Rn6Jt13zLa8Z%2Fe22UfqhON5zHYrn%2BAtefALJd%2FBiO36w%3D%3D&routeId="+routeId+"";
+        try{
+            URL url= new URL(queryUrl); //문자열로 된 요청 url을 URL 객체로 생성.
+            InputStream is= url.openStream(); //url위치로 입력스트림 연결.
+
+            XmlPullParserFactory factory= XmlPullParserFactory.newInstance();//xml파싱을 위함.
+            XmlPullParser xpp= factory.newPullParser();
+            xpp.setInput( new InputStreamReader(is, "UTF-8") ); //inputstream 으로부터 xml 입력받기.
+
+            String tag;
+
+            xpp.next();
+            int eventType= xpp.getEventType();
+            while( eventType != XmlPullParser.END_DOCUMENT ){
+                switch( eventType ){
+                    case XmlPullParser.START_DOCUMENT:
+                        buffer.append("파싱 시작...\n\n");
+                        break;
+
+                    case XmlPullParser.START_TAG:
+                        tag= xpp.getName();//테그 이름 얻어오기
+
+                        if(tag.equals("busRouteStationList")) ;// 첫번째 검색결과
+                        else if(tag.equals("stationId")){
+                            buffer.append("정류소 Id : ");
+                            xpp.next();
+                            buffer.append(xpp.getText());//요소의 TEXT 읽어와서 문자열버퍼에 추가
+                            buffer.append("\n"); //줄바꿈 문자 추가
+                        }
+                        else if(tag.equals("stationName")){
+                            buffer.append("정류소명 : ");
+                            xpp.next();
+                            buffer.append(xpp.getText());//요소의 TEXT 읽어와서 문자열버퍼에 추가
+                            buffer.append("\n");//줄바꿈 문자 추가
+                        }
+                        else if(tag.equals("x")){
+                            buffer.append("경도 :");
+                            xpp.next();
+                            buffer.append(xpp.getText());//요소의 TEXT 읽어와서 문자열버퍼에 추가
+                            buffer.append("\n");//줄바꿈 문자 추가
+                        }
+                        else if(tag.equals("y")){
+                            buffer.append("위도 :");
+                            xpp.next();
+                            buffer.append(xpp.getText());//telephone 요소의 TEXT 읽어와서 문자열버퍼에 추가
+                            buffer.append("\n");//줄바꿈 문자 추가
+                        }
+
+
+
+
+
+
+                        break;
+
+                    case XmlPullParser.TEXT:
+                        break;
+
+                    case XmlPullParser.END_TAG:
+                        tag= xpp.getName(); //테그 이름 얻어오기
+
+                        if(tag.equals("busRouteStationList")) buffer.append("\n");// 첫번째 검색결과종료..줄바꿈
+                        break; // -> 이 부분 앤드테그 부분이 시작이랑 동일하므로 꼭 필요한 부분임.
+                }
+
+                eventType= xpp.next();
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        buffer.append("클릭하시면 노선 정보를 제공합니다\n");
+        return buffer.toString();//StringBuffer 문자열 객체 반환
+
+    }//getXmlData method....
+
+    @Override
+    public void onStop() {
+
+
+
+        super.onStop();
+
+        Intent intent = new Intent(((MainActivity)getActivity()), MainActivity.class);
+
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //  intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        startActivity(intent);
+
+    }
+
 }

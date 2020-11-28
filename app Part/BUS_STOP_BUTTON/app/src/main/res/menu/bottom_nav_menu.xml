@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/navigation_button"
         android:icon="@drawable/stop_circle"
-        android:title="Button" />
+        android:title="Button"
+        />
 
     <item
         android:id="@+id/navigation_route"
-        android:icon="@drawable/bus"
-        android:title="Bus Route" />
+        android:icon="@drawable/map"
+        android:title="Station Map"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"/>
 
     <item
         android:id="@+id/navigation_login"
-        android:icon="@drawable/login"
-        android:title="Log In" />
+        android:icon="@drawable/bus"
+        android:title="Bus Route"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"/>
 
 </menu>

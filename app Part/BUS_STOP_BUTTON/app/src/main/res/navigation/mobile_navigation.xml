@@ -9,17 +9,24 @@
         android:id="@+id/navigation_button"
         android:name="com.example.bus_stop_button.ui.home.HomeFragment"
         android:label="Button"
-        tools:layout="@layout/fragment_button" />
+        tools:layout="@layout/fragment_button"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"
+        />
 
     <fragment
         android:id="@+id/navigation_route"
         android:name="com.example.bus_stop_button.ui.dashboard.DashboardFragment"
         android:label="Bus Route"
-        tools:layout="@layout/fragment_route" />
+        tools:layout="@layout/fragment_route"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"/>
 
     <fragment
         android:id="@+id/navigation_login"
         android:name="com.example.bus_stop_button.ui.notifications.NotificationsFragment"
         android:label="Log In"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"/>
 </navigation>
